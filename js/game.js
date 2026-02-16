@@ -4,11 +4,11 @@ const gGame = {
     isFirstClick: true,
     isOn: false,
     reveledCount: 0,
-    markedCount: 0,
+    markedCount: 0, 
     secsPassed: 0
 }
 
-var gBoard
+let gBoard
 
 function init() {
     gBoard = buildBoard()
@@ -21,7 +21,6 @@ function onCellClick(elCell, i, j) {
         gGame.isFirstClick = false
         startGame({i, j})
     }
-
     // check game is running
     if (!gGame.isOn) return
 
@@ -44,13 +43,11 @@ function onCellClick(elCell, i, j) {
         onGameOver()
         return
     }
-
     // victory check
-    if (gGame.reveledCount === gLevel.NEED_REVEALED) {
+    if (gGame.reveledCount + gGame.markedCount === gLevel.HEIGHT*gLevel.WIDTH) {
         onVictory()
         return
     }
-
     // cell is number > 0
     if (cell.minesAroundCount > 0) return
 
@@ -58,7 +55,7 @@ function onCellClick(elCell, i, j) {
     for (let k = i - 1; k <= i + 1; k++) {
         for (let l = j - 1; l <= j + 1; l++) {
 
-            const currCelCell = document.getElementById(`cell-${k}-${l}`)
+            const currCelCell = document.querySelector(`.cell-${k}-${l}`)
             onCellClick(currCelCell, k, l)
         }
     }
@@ -77,6 +74,7 @@ function onCellRightClick(ev, elCell, i, j) {
 
     // mark cell
     cell.isMarked = (cell.isMarked) ? false : true
+    updateMarkedCount(cell.isMarked)
     toggleMarkCell(elCell, cell)
 }
 

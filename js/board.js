@@ -3,10 +3,9 @@
 function buildBoard() {
     const board = []
 
-    for (var i = 0; i < gLevel.HEIGHT; i++) {
+    for (let i = 0; i < gLevel.HEIGHT; i++) {
         board.push([])
-
-        for (var j = 0; j < gLevel.WIDTH; j++) {
+        for (let j = 0; j < gLevel.WIDTH; j++) {
             board[i][j] = createCellObj(false)
         }
     }
@@ -25,7 +24,6 @@ function createCellObj(mine = false) {
 }
 
 function placeMines(board, firstClick) {
-
     let placed = 0
     while (placed < gLevel.MINES) {
 
@@ -48,12 +46,10 @@ function placeMines(board, firstClick) {
 }
 
 function countAroundMine(board, cellPos) {
-
     for (let i = cellPos.i - 1; i <= cellPos.i + 1; i++) {
         if (i < 0 || i >= board.length) continue
 
         for (let j = cellPos.j - 1; j <= cellPos.j + 1; j++) {
-
             if (j < 0 || j >= board[0].length) continue
             if (i === cellPos.i && j === cellPos.j) continue
 
