@@ -1,42 +1,15 @@
 'use strict'
 
-const SAFE = 'SAFE'
-const MINE = 'MINE'
-
 function buildBoard() {
-
-    const height = gLevel.HEIGHT
-    const width = gLevel.WIDTH
-    const mines = gLevel.MINES
-
     const board = []
-    // only for debug: remove later
-    const boardMap = []
 
-    const boardContent = [...Array(height * width - mines).fill(SAFE), ...Array(mines).fill(MINE)]
-    console.log(boardContent)
-
-    for (var i = 0; i < height; i++) {
-
+    for (var i = 0; i < gLevel.HEIGHT; i++) {
         board.push([])
-        boardMap.push([])
 
-        for (var j = 0; j < width; j++) {
-
-            const randIdx = getRandomInt(0, boardContent.length)
-            boardMap[i][j] = boardContent.splice(randIdx, 1)[0]
-
-            if (boardMap[i][j] === SAFE) board[i][j] = createCellObj()
-            else {
-                board[i][j] = createCellObj(true)
-            }
+        for (var j = 0; j < gLevel.WIDTH; j++) {
+            board[i][j] = createCellObj(false)
         }
     }
-
-    countMinesAround(board)
-
-    console.table(boardMap)
-    console.table(board)
     return board
 }
 
@@ -51,17 +24,30 @@ function createCellObj(mine = false) {
     return cell
 }
 
-function countMinesAround(board) {
-    for (let i = 0; i < board.length; i++) {
-        for (let j = 0; j < board[0].length; j++) {
-            const cell = board[i][j];
-            if (!cell.isMine) continue
-            minesNeigbCount(board, { i, j })
-        }
+function placeMines(board, firstClick) {
+
+    let placed = 0
+    while (placed < gLevel.MINES) {
+
+        const i = getRandomInt(0, board.length)
+        const j = getRandomInt(0, board[0].length)
+        const cell = board[i][j]
+
+        // exclude the first clicked cell and first degree neighbors
+        if (i <= firstClick.i + 1 && i >= firstClick.i - 1
+            && j <= firstClick.j + 1 && j >= firstClick.j - 1) continue
+
+        // exclude mines
+        if (cell.isMine) continue
+
+        cell.isMine = true
+
+        countAroundMine(board, {i, j})
+        placed++
     }
 }
 
-function minesNeigbCount(board, cellPos) {
+function countAroundMine(board, cellPos) {
 
     for (let i = cellPos.i - 1; i <= cellPos.i + 1; i++) {
         if (i < 0 || i >= board.length) continue
