@@ -59,7 +59,5 @@ function onNewGameClick() {
     clearInterval(gGame.gameIntervalId)
     clearAllLivesTimeouts()
     clearGameObj()
-    renderSecPassed(gGame.secsPassed)
-    renderEmojiBtn(gEmojiMap.NEW_GAME)
     init()
 }

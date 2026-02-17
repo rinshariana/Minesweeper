@@ -70,9 +70,10 @@ function renderMinesCount() {
     elMinesNum.innerText = String(minesNum).padStart(3, '0')
 }
 
-function renderLiveCount() { 
+function renderLiveCount() {
     const elLivesCount = document.querySelector('.live-count')
-    elLivesCount.innerText = gGame.liveCount
+    const livesLeft = '🤍'.repeat(gGame.maxLives - gGame.liveCount) + '❤️'.repeat(gGame.liveCount)
+    elLivesCount.innerText = livesLeft
 }
 
 function renderEmojiBtn(state) {

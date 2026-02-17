@@ -7,16 +7,20 @@ const gGame = {
     markedCount: 0,
     secsPassed: 0,
     gameIntervalId: null,
-    liveCount: 3
+    liveCount: 3,
+    maxLives: 3
 }
 
 let gBoard
 let gLivesTimeouts = []
 
 function init() {
-    renderMinesCount()
     gBoard = buildBoard()
     renderBoard(gBoard)
+    renderMinesCount()
+    renderSecPassed(gGame.secsPassed)
+    renderLiveCount()
+    renderEmojiBtn(gEmojiMap.NEW_GAME)
 }
 
 function startGame(firstClick) {
