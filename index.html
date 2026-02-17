@@ -9,9 +9,22 @@
 </head>
 
 <body onload="init()" onkeyup="movePacman(event)">
+
+    <div class="stats-top">
+        <span class="mines-num">000</span>
+        <button>😊</button>
+        <span class="stopwatch">000</span>
+    </div>
+
     <div class="board-container">
-        <div class="stat-container"></div>
-        <table><tbody>board</tbody></table>
+        <table>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="stats-bottom">
+        <span>lives: </span><span class="live-count">3</span>
+        <button>Hint 3</button>
     </div>
 
     <script src="js/game.js"></script>
@@ -19,6 +32,7 @@
     <script src="js/level.js"></script>
     <script src="js/render.js"></script>
     <script src="js/utils.js"></script>
+
 </body>
 
 </html>

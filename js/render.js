@@ -49,3 +49,19 @@ function renderAllMines(board) {
         }
     }
 }
+
+function renderSecPassed(secPassed) {
+    const elStopWatch = document.querySelector('.stopwatch')
+    elStopWatch.innerText = String(secPassed).padStart(3, '0')
+}
+
+function renderLevelInfo() {
+    const minesNum = gLevel.MINES
+    const elMinesNum = document.querySelector('.mines-num')
+    elMinesNum.innerText = String(minesNum).padStart(3, '0')
+}
+
+function renderLiveCount() { 
+    const elLivesCount = document.querySelector('.live-count')
+    elLivesCount.innerText = gGame.liveCount
+}

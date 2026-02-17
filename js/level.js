@@ -2,9 +2,13 @@
 
 const gLevel = {
     HEIGHT: 9,
-    WIDTH: 9,
-    MINES: 10,
-    get NEED_REVEALED() { 
-        return this.HEIGHT * this.WIDTH - this.MINES 
-    }
+    WIDTH: 11,
+    MINES: 10
 }
+
+function setLevel(height, width, mines) {
+    gLevel.HEIGHT = height
+    gLevel.WIDTH = width
+    gLevel.MINES = mines
+}
+

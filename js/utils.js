@@ -8,3 +8,10 @@ function updateMarkedCount(isMarked) {
     if (isMarked) gGame.markedCount++
     else gGame.markedCount--
 }
+
+function clearAllLivesTimeouts() {
+    for (let i = 0; i < gLivesTimeouts.length; i++) {
+        clearTimeout(gLivesTimeouts[i])
+    }
+    gLivesTimeouts = []
+}

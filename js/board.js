@@ -2,7 +2,6 @@
 
 function buildBoard() {
     const board = []
-
     for (let i = 0; i < gLevel.HEIGHT; i++) {
         board.push([])
         for (let j = 0; j < gLevel.WIDTH; j++) {
@@ -26,7 +25,6 @@ function createCellObj(mine = false) {
 function placeMines(board, firstClick) {
     let placed = 0
     while (placed < gLevel.MINES) {
-
         const i = getRandomInt(0, board.length)
         const j = getRandomInt(0, board[0].length)
         const cell = board[i][j]

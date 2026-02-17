@@ -1,15 +1,17 @@
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'VT323', monospace;
 }
 
 .board-container {
-    display: inline-block;
     margin: 20px;
 }
 
 table {
-    margin: 100px auto;
     border: 1px solid #aaaaaa;
     border-collapse: collapse;
 }
@@ -17,8 +19,7 @@ table {
 td {
     width: 30px;
     height: 30px;
-    border: 1px solid #aaaaaa;
-    display: inline-block;
+    border: 2px solid #aaaaaa;
     text-align: center;
     vertical-align: middle;
     font-size: 20px;
@@ -26,9 +27,6 @@ td {
 
     /* Default color for unrevealed tiles */
     background-color: #eee;
-
-    /* Default color for unrevealed tile text */
-    color: #333;
 }
 
 .revealed {
@@ -42,4 +40,10 @@ td {
 .mine {
     /* Color for mines */
     background-color: #ff3333;
+}
+
+.stopwatch, .mines-num {
+    background-color: #eee;
+    border: 1px solid #aaaaaa;
+    font-size: x-large;
 }
