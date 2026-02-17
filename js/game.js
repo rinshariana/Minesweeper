@@ -10,14 +10,19 @@ const gGame = {
     liveCount: 3
 }
 
+let gBoard
 let gLivesTimeouts = []
 
-let gBoard
-
 function init() {
-    renderLevelInfo()
+    renderMinesCount()
     gBoard = buildBoard()
     renderBoard(gBoard)
+}
+
+function startGame(firstClick) {
+    gGame.isOn = true
+    placeMines(gBoard, firstClick)
+    gGame.gameIntervalId = startStopWatch()
 }
 
 function onCellClick(elCell, i, j) {
@@ -79,10 +84,27 @@ function onCellRightClick(ev, elCell, i, j) {
     const cell = gBoard[i][j]
     if (cell.isRevealed) return
 
-    // mark cell
+    // update DOM
     cell.isMarked = (cell.isMarked) ? false : true
     updateMarkedCount(cell.isMarked)
     toggleMarkCell(elCell, cell)
+    renderMinesCount()
+}
+
+function removeLife(elCell, cell) {
+    if (gGame.liveCount <= 1) return
+    gGame.liveCount--
+    renderRevealedCell(elCell, cell)
+    renderEmojiBtn(gEmojiMap.INJURED)
+
+    const setTimeoutId = setTimeout(() => {
+        cell.isRevealed = false
+        elCell.innerText = ''
+        elCell.classList.remove('revealed', 'mine')
+        renderEmojiBtn(gEmojiMap.NEW_GAME)
+    }, 1500)
+
+    gLivesTimeouts.push(setTimeoutId)
 }
 
 function onGameOver() {
@@ -91,18 +113,13 @@ function onGameOver() {
     clearInterval(gGame.gameIntervalId)
     clearAllLivesTimeouts()
     renderAllMines(gBoard)
-}
-
-function startGame(firstClick) {
-    gGame.isOn = true
-    placeMines(gBoard, firstClick)
-
-    gGame.gameIntervalId = startStopWatch()
+    renderEmojiBtn(gEmojiMap.GAME_OVER)
 }
 
 function onVictory() {
     console.log('victory')
     clearInterval(gGame.gameIntervalId)
+    renderEmojiBtn(gEmojiMap.VICTORY)
     // create modal with message
 }
 
@@ -112,18 +129,4 @@ function startStopWatch() {
         renderSecPassed(gGame.secsPassed)
     }, 1000)
     return gameIntervalId
-}
-
-function removeLife(elCell, cell) {
-    if (gGame.liveCount <= 1) return
-    gGame.liveCount--
-    renderRevealedCell(elCell, cell)
-
-    const setTimeoutId = setTimeout(() => {
-        cell.isRevealed = false
-        elCell.innerText = ''
-        elCell.classList.remove('revealed', 'mine')
-    }, 1500)
-
-    gLivesTimeouts.push(setTimeoutId)
 }

@@ -37,7 +37,6 @@ function placeMines(board, firstClick) {
         if (cell.isMine) continue
 
         cell.isMine = true
-
         countAroundMine(board, {i, j})
         placed++
     }
@@ -54,4 +53,13 @@ function countAroundMine(board, cellPos) {
             board[i][j].minesAroundCount++
         }
     }
+}
+
+function onNewGameClick() {
+    clearInterval(gGame.gameIntervalId)
+    clearAllLivesTimeouts()
+    clearGameObj()
+    renderSecPassed(gGame.secsPassed)
+    renderEmojiBtn(gEmojiMap.NEW_GAME)
+    init()
 }

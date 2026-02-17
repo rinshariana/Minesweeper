@@ -15,3 +15,13 @@ function clearAllLivesTimeouts() {
     }
     gLivesTimeouts = []
 }
+
+function clearGameObj() {
+    gGame.isFirstClick = true
+    gGame.isOn = false
+    gGame.reveledCount = 0
+    gGame.markedCount = 0
+    gGame.secsPassed = 0
+    gGame.gameIntervalId = null
+    gGame.liveCount = 3
+}

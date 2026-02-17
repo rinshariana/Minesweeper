@@ -1,5 +1,14 @@
 'use strict'
 
+const gEmojiMap = {
+    NEW_GAME: '😊',
+    INJURED: '🤕',
+    GAME_OVER: '💀',
+    VICTORY: '🤓'
+    // GAME_OVER: '😵',
+    // LIVES_2: '🤨',
+}
+
 function renderBoard(board) {
     let strHTML = ''
 
@@ -55,8 +64,8 @@ function renderSecPassed(secPassed) {
     elStopWatch.innerText = String(secPassed).padStart(3, '0')
 }
 
-function renderLevelInfo() {
-    const minesNum = gLevel.MINES
+function renderMinesCount() {
+    const minesNum = gLevel.MINES - gGame.markedCount
     const elMinesNum = document.querySelector('.mines-num')
     elMinesNum.innerText = String(minesNum).padStart(3, '0')
 }
@@ -64,4 +73,10 @@ function renderLevelInfo() {
 function renderLiveCount() { 
     const elLivesCount = document.querySelector('.live-count')
     elLivesCount.innerText = gGame.liveCount
+}
+
+function renderEmojiBtn(state) {
+    const elEmojiBtn = document.querySelector('.emoji-btn')
+    elEmojiBtn.innerText = state
+
 }
