@@ -27,6 +27,9 @@ function init() {
     renderSecPassed(gGame.secsPassed)
     renderLiveCount()
     renderEmojiBtn(gEmojiMap.NEW_GAME)
+    
+    // close popup if needed
+    onCloseBtnClick()
 }
 
 function startGame(firstClick) {
@@ -72,11 +75,8 @@ function onCellClick(elCell, i, j) {
     }
 
     gGame.reveledCount++
-    console.log('gGame.reveledCount', gGame.reveledCount)
-    console.log('gGame.markedCountt', gGame.markedCount)
-
     // victory check
-    if (gGame.reveledCount + gGame.markedCount === gLevel.HEIGHT * gLevel.WIDTH) {
+    if (isVictory()) {
         onVictory()
         return
     }
@@ -110,9 +110,7 @@ function onCellRightClick(ev, elCell, i, j) {
     toggleMarkCell(elCell, cell)
     renderMinesCount()
 
-    if (gGame.reveledCount + gGame.markedCount === gLevel.HEIGHT * gLevel.WIDTH) onVictory()
-    console.log('gGame.reveledCount', gGame.reveledCount)
-    console.log('gGame.markedCountt', gGame.markedCount)
+    if (isVictory()) onVictory()
 }
 
 function removeLife(elCell, cell) {

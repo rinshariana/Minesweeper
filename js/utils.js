@@ -32,3 +32,7 @@ function constructMessage(victory) {
     'Oops...Maybe next time\nyou will have more luck.'
     return str
 }
+
+function isVictory() {
+    return gGame.reveledCount + gGame.markedCount === gLevel.HEIGHT * gLevel.WIDTH
+}
