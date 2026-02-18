@@ -37,6 +37,7 @@ function renderRevealedCell(elCell, cell) {
         elCell.classList.add('mine')
 
     } else if (cell.minesAroundCount > 0) {
+        elCell.classList.add(`num-${cell.minesAroundCount}`)
         elCell.innerText = cell.minesAroundCount
     }
 }
@@ -53,6 +54,7 @@ function renderAllMines(board) {
             const cell = board[i][j];
             if (cell.isMine) {
                 const elCell = document.querySelector(`.cell-${i}-${j}`)
+                elCell.classList.add('revealed')
                 elCell.innerText = '💣'
             }
         }
@@ -72,7 +74,7 @@ function renderMinesCount() {
 
 function renderLiveCount() {
     const elLivesCount = document.querySelector('.live-count')
-    const livesLeft = '🤍'.repeat(gGame.maxLives - gGame.liveCount) + '❤️'.repeat(gGame.liveCount)
+    const livesLeft = '🩶'.repeat(gGame.maxLives - gGame.liveCount) + '❤️'.repeat(gGame.liveCount)
     elLivesCount.innerText = livesLeft
 }
 
@@ -80,4 +82,16 @@ function renderEmojiBtn(state) {
     const elEmojiBtn = document.querySelector('.emoji-btn')
     elEmojiBtn.innerText = state
 
+}
+
+function renderPopUp(msg) {
+    const elPopup = document.querySelector('.popup-container')
+    const elText = document.querySelector('.popup-container p')
+    elText.innerText = msg
+    elPopup.classList.remove('hidden')
+}
+
+function onCloseBtnClick() {
+    const elPopup = document.querySelector('.popup-container')
+    elPopup.classList.add('hidden')
 }

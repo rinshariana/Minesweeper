@@ -1,58 +1,240 @@
 body {
     height: 100vh;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-family: 'VT323', monospace;
+
+    background: #dadada;
+
+    font-family: monospace;
 }
 
-.board-container {
-    margin: 20px;
+* {
+    box-sizing: border-box;
 }
 
-table {
-    border: 1px solid #aaaaaa;
-    border-collapse: collapse;
+.hidden {
+    display: none;
 }
 
-td {
-    width: 30px;
-    height: 30px;
-    border: 2px solid #aaaaaa;
-    text-align: center;
-    vertical-align: middle;
-    font-size: 20px;
-    cursor: pointer;
+.game-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-    /* Default color for unrevealed tiles */
-    background-color: #eee;
+    background: #dfdfdf;
+
+    padding: 20px 0 20px 0;
+
+    border: 3px solid #fefefe;
+    border-style: outset;
+
+    box-shadow: 3px 3px 10px rgb(0 0 0 / 50%);
 }
 
-.revealed {
-    /* Color for revealed tiles */
-    background-color: #ccc;
+.top-bar,
+.bottom-bar {
+    display: flex;
 
-    /* Color for revealed tile text */
-    color: #000;
-}
+    background: #dfdfdf;
+    border: 3px solid #fefefe;
+    border-style: inset;
 
-.mine {
-    /* Color for mines */
-    background-color: #ff3333;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .stopwatch,
 .mines-num {
-    background-color: #eee;
-    border: 1px solid #aaaaaa;
-    font-size: x-large;
+    height: 60px;
+    width: 100px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 35px;
+    text-align: center;
+    color: #595959;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.158);
+
+
+    background-color: #dfdfdf;
+    border: 3px solid #fefefe;
+    border-style: outset;
 }
 
 .emoji-btn {
     height: 60px;
     width: 60px;
-    font-size: 43px;
-    text-align: center;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     vertical-align: middle;
+    text-align: center;
+    font-size: 40px;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.369);
+
+    background: #dfdfdf;
+
+    border: 3px solid #fefefe;
+    border-style: outset;
+    cursor: pointer;
+}
+
+.emoji-btn:hover {
+    background: #f0f0f0;
+}
+
+.emoji-btn:active {
+    background: #c5c5c5;
+    font-size: 38px;
+    border: 3px solid #bebebe;
+    border-style: inset;
+}
+
+.board-container {
+    margin: 20px;
+    background: #a4a4a4;
+    border: 3px solid #fefefe;
+    border-style: inset;
+}
+
+table {
+    width: fit-content;
+    border-collapse: separate;
+    border-spacing: 1px;
+}
+
+td {
+    width: 35px;
+    height: 35px;
+
+    vertical-align: middle;
+    text-align: center;
+    font-size: 16px;
+
+    cursor: pointer;
+
+    /* Default color for unrevealed tiles */
+    background: #dfdfdf;
+
+    /* raised bevel */
+    border: 3px solid #fefefe;
+    border-style: outset;
+
+    transition: ease-in-out;
+}
+
+td:not(.revealed, .mine):hover {
+    background: #f0f0f0;
+}
+
+td:not(.revealed, .mine):active {
+    background: #c5c5c5;
+    border: 3px solid #bebebe;
+    border-style: inset;
+}
+
+.revealed {
+    /* Color for revealed tiles */
+    background-color: #dfdfdf;
+    border: 1px solid #dfdfdf;
+
+    cursor: default;
+
+    /* Color for revealed tile text */
+    color: #474747;
+}
+
+.mine {
+    /* Color for mines */
+    background: #fc6567;
+    border: 1px solid #de585a;
+}
+
+label {
+    width: 150px;
+    height: 40px;
+    padding: 3px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #474747;
+
+    border: 3px solid #fefefe;
+    border-style: outset;
+}
+
+select {
+    color: #474747;
+    background: #dfdfdf;
+    font-family: monospace;
+
+    cursor: pointer;
+}
+
+select:hover {
+    background: #f0f0f0;
+}
+
+span {
+    width: 100px;
+    height: 40px;
+    padding: 3px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+    font-size: 16px;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.158);
+
+    border: 3px solid #fefefe;
+    border-style: outset;
+}
+
+.popup-container {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+
+    font-size: 16px;
+    font-family: 'VT323', monospace;
+
+    background: #f2f2f2;
+    color: #404040;
+
+    border: 1px solid #757575;
+
+    box-shadow: 3px 3px 10px rgb(0 0 0 / 50%);
+
+    z-index: 999;
+    transition: opacity 0.3s ease;
+}
+
+.close-btn {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: end;
+
+    color: #2e2e2e;
+    background: #f6ce3d;
+    cursor: pointer;
+
+    border: 0px;
+    border-bottom: 1px solid #757575;
+}
+
+p {
+    margin: 15px;
 }

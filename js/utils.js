@@ -25,3 +25,10 @@ function clearGameObj() {
     gGame.gameIntervalId = null
     gGame.liveCount = 3
 }
+
+function constructMessage(victory) {
+    let str = (victory)? 
+    `Congratulations! You just found\nall mines in ${gGame.secsPassed} seconds.`:
+    'Oops...Maybe next time\nyou will have more luck.'
+    return str
+}

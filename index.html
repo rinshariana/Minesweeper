@@ -8,28 +8,42 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 
-<body onload="init()" onkeyup="movePacman(event)">
-
-    <div class="stats-top">
-        <span class="mines-num"></span>
-        <button class="emoji-btn" onclick="onNewGameClick()"></button>
-        <span class="stopwatch"></span>
+<body onload="init()">
+    <div class="popup-container hidden">
+        <button class="close-btn" onclick="onCloseBtnClick(this.parent)">&#10005;</button>
+        <p></p>
     </div>
 
-    <div class="board-container">
-        <table>
-            <tbody></tbody>
-        </table>
-    </div>
+    <div class="game-wrapper">
+        <div class="top-bar">
+            <span class="mines-num"></span>
+            <button class="emoji-btn" onclick="onNewGameClick()"></button>
+            <span class="stopwatch"></span>
+        </div>
 
-    <div class="stats-bottom">
-        <span class="live-count"></span>
-        <!-- <button>Hint 3</button> -->
+        <div class="board-container">
+            <table>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="bottom-bar">
+
+            <label>Level: 
+                <select onchange="onSetLevel(this.value)">
+                    <!-- <option value="default">Choose…</option> -->
+                    <option value="9,9,10">Easy</option>
+                    <option value="16,16,40">Normal</option>
+                    <option value="16,30,99">Hard</option>
+                </select>
+            </label>
+
+            <span class="live-count"></span>
+        </div>
     </div>
 
     <script src="js/game.js"></script>
     <script src="js/board.js"></script>
-    <script src="js/level.js"></script>
     <script src="js/render.js"></script>
     <script src="js/utils.js"></script>
 

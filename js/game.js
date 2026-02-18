@@ -11,6 +11,12 @@ const gGame = {
     maxLives: 3
 }
 
+const gLevel = {
+    HEIGHT: 9,
+    WIDTH: 9,
+    MINES: 10
+}
+
 let gBoard
 let gLivesTimeouts = []
 
@@ -45,9 +51,14 @@ function onCellClick(elCell, i, j) {
     const cell = gBoard[i][j]
     if (cell.isRevealed) return
 
-    // update cell and gGame obj
+    if (cell.isMarked) {
+        cell.isMarked = false
+        updateMarkedCount(cell.isMarked)
+        renderMinesCount()
+    }
+
+    // update cell
     cell.isRevealed = true
-    gGame.reveledCount++
 
     // update DOM
     renderRevealedCell(elCell, cell)
@@ -59,6 +70,11 @@ function onCellClick(elCell, i, j) {
         renderLiveCount()
         return
     }
+
+    gGame.reveledCount++
+    console.log('gGame.reveledCount', gGame.reveledCount)
+    console.log('gGame.markedCountt', gGame.markedCount)
+
     // victory check
     if (gGame.reveledCount + gGame.markedCount === gLevel.HEIGHT * gLevel.WIDTH) {
         onVictory()
@@ -93,6 +109,10 @@ function onCellRightClick(ev, elCell, i, j) {
     updateMarkedCount(cell.isMarked)
     toggleMarkCell(elCell, cell)
     renderMinesCount()
+
+    if (gGame.reveledCount + gGame.markedCount === gLevel.HEIGHT * gLevel.WIDTH) onVictory()
+    console.log('gGame.reveledCount', gGame.reveledCount)
+    console.log('gGame.markedCountt', gGame.markedCount)
 }
 
 function removeLife(elCell, cell) {
@@ -114,17 +134,21 @@ function removeLife(elCell, cell) {
 function onGameOver() {
     gGame.liveCount--
     gGame.isOn = false
+    const msg = constructMessage(false)
+
     clearInterval(gGame.gameIntervalId)
     clearAllLivesTimeouts()
     renderAllMines(gBoard)
     renderEmojiBtn(gEmojiMap.GAME_OVER)
+    renderPopUp(msg)
 }
 
 function onVictory() {
-    console.log('victory')
+    gGame.isOn = false
+    const msg = constructMessage(true)
     clearInterval(gGame.gameIntervalId)
     renderEmojiBtn(gEmojiMap.VICTORY)
-    // create modal with message
+    renderPopUp(msg)
 }
 
 function startStopWatch() {
@@ -133,4 +157,12 @@ function startStopWatch() {
         renderSecPassed(gGame.secsPassed)
     }, 1000)
     return gameIntervalId
+}
+
+function onSetLevel(str) {
+    const values = str.split(',')
+    gLevel.HEIGHT = +values[0]
+    gLevel.WIDTH = +values[1]
+    gLevel.MINES = +values[2]
+    onNewGameClick()
 }
