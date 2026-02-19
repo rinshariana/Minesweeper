@@ -11,10 +11,29 @@ const gGame = {
     maxLives: 3
 }
 
-const gLevel = {
+let gLevel = {
     HEIGHT: 9,
     WIDTH: 9,
-    MINES: 10
+    MINES: 10,
+    NAME: 'EASY'
+}
+
+const levelsMap = {
+    EASY: {
+        HEIGHT: 9,
+        WIDTH: 9,
+        MINES: 10
+    },
+    NORMAL: {
+        HEIGHT: 16,
+        WIDTH: 16,
+        MINES: 40
+    },
+    HARD: {
+        HEIGHT: 16,
+        WIDTH: 30,
+        MINES: 99
+    },
 }
 
 let gBoard
@@ -27,7 +46,7 @@ function init() {
     renderSecPassed(gGame.secsPassed)
     renderLiveCount()
     renderEmojiBtn(gEmojiMap.NEW_GAME)
-    
+
     // close popup if needed
     onCloseBtnClick()
 }
@@ -59,10 +78,7 @@ function onCellClick(elCell, i, j) {
         updateMarkedCount(cell.isMarked)
         renderMinesCount()
     }
-
-    // update cell
     cell.isRevealed = true
-
     // update DOM
     renderRevealedCell(elCell, cell)
 
@@ -73,7 +89,6 @@ function onCellClick(elCell, i, j) {
         renderLiveCount()
         return
     }
-
     gGame.reveledCount++
     // victory check
     if (isVictory()) {
@@ -157,10 +172,20 @@ function startStopWatch() {
     return gameIntervalId
 }
 
-function onSetLevel(str) {
-    const values = str.split(',')
-    gLevel.HEIGHT = +values[0]
-    gLevel.WIDTH = +values[1]
-    gLevel.MINES = +values[2]
+function onSetLevel(levelName) {
+    gLevel = {
+        ...levelsMap[levelName],
+        NAME: levelName
+    }
     onNewGameClick()
+}
+
+function checkHighScore() {
+    const highScore = localStorage.getItem(`highScore${gLevel.NAME}`)
+    const currScore = gGame.secsPassed
+    if (currScore < highScore || !highScore) {
+        localStorage.setItem(`highScore${gLevel.NAME}`, currScore)
+        return null
+    }
+    return highScore
 }

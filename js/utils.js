@@ -27,9 +27,16 @@ function clearGameObj() {
 }
 
 function constructMessage(victory) {
-    let str = (victory)? 
-    `Congratulations! You just found\nall mines in ${gGame.secsPassed} seconds.`:
-    'Oops...Maybe next time\nyou will have more luck.'
+    let str = ''
+    if (!victory) {
+        str = 'Oops...Maybe next time\nyou will have more luck.'
+        return str
+    }
+    const highScore = checkHighScore()
+    str = `Congratulations! You just found\nall mines in ${gGame.secsPassed} seconds.`
+    if (!highScore) str += `\nNew high score! - ${gGame.secsPassed}.`
+    else str += `\nHigh score - ${highScore}.`
+
     return str
 }
 
